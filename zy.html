@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>卢天豪的牛逼词典作业</title>
+    <style>
+        * {
+            background-color: aliceblue;
+            border: 0;
+            margin: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Open Sans', sans-serif;
+            background-color: #f5f5f5;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+       .dictionary-container {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            width: 600px;
+        }
+
+        h1 {
+            font-size: 28px;
+            color: #333;
+            margin-bottom: 20px;
+        }
+
+       .input-group {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        input[type="text"] {
+            flex: 1;
+            padding: 12px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 16px;
+            transition: border-color 0.3s ease;
+        }
+
+        input[type="text"]:focus {
+            border-color: #007bff;
+            outline: none;
+        }
+
+        button {
+            padding: 10px 15px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease, box-shadow 0.3s ease;
+            font-size: 16px;
+            margin-left: 10px;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        #result {
+            margin-top: 20px;
+            font-size: 18px;
+            color: #555;
+            line-height: 1.5;
+            opacity: 0;
+            transition: opacity 0.5s ease;
+        }
+
+        #result.show {
+            opacity: 1;
+        }
+
+        #randword {
+            background-color: #2196F3;
+        }
+
+        #clearResult {
+            padding: 10px;
+            background-color: #f44336;
+            color: #fff;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            margin-top: 10px;
+            font-size: 16px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="dictionary-container">
+        <h1>卢天豪的牛逼词典作业</h1>
+        <div class="input-group">
+            <button id="randword">随机单词</button>
+            <input type="text" id="wordInput">
+            <button onclick="searchWord()">读入单词</button>
+        </div>
+        <p id="result"></p>
+        <button id="clearResult">清除结果</button>
+    </div>
+    <footer>
+        <p>© 2024 卢天豪. 词典作业版权所有.</p>
+    </footer>
+    <script>
+        const dictionary = {
+            "a": {
+                word: "a",
+                pronunciation: "/ei/",
+                translation: "art.一(个);每一(个);(同类事物中)任一个"
+            },
+            "abandon": {
+                word: "abandon",
+                pronunciation: "/ə'bændən/",
+                translation: "vt.离弃,丢弃;遗弃,抛弃;放弃"
+            },
+            "abdomen": {
+                word: "abdomen",
+                pronunciation: "/æb'dəumen/",
+                translation: "n.腹,下腹(胸部到腿部的部分)"
+            }
+        };
+
+        let randomWordCount = 0;
+
+        function searchWord() {
+            const word = document.getElementById('wordInput').value;
+            const resultElement = document.getElementById('result');
+            if (/^[a-zA-Z]+$/.test(word)) {
+                const wordData = dictionary[word];
+                if (wordData) {
+                    resultElement.innerHTML = `<strong>${wordData.word}</strong><br>音标：${wordData.pronunciation}<br>翻译：${wordData.translation}`;
+                    resultElement.classList.add('show');
+                } else {
+                    resultElement.textContent = "没有喔。";
+                    resultElement.classList.add('show');
+                }
+            } else {
+                resultElement.textContent = "再来一次。";
+                resultElement.classList.add('show');
+            }
+        }
+
+        document.getElementById('randword').addEventListener('click', function () {
+            const randomWord = Object.keys(dictionary)[Math.floor(Math.random() * Object.keys(dictionary).length)];
+            document.getElementById('wordInput').value = randomWord;
+            searchWord();
+            randomWordCount++;
+            if (randomWordCount % 10 === 0) {
+                alert('好棒，喝点水，再接再厉。');
+            }
+        });
+
+        document.getElementById('clearResult').addEventListener('click', function () {
+            document.getElementById('result').textContent = '';
+            document.getElementById('result').classList.remove('show');
+        });
+    </script>
+</body>
+
+</html>
